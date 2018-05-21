@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ase:aseXML xmlns:ase="urn:aseXML:r29" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:aseXML:r29 http://www.nemmco.com.au/aseXML/schemas/r29/aseXML_r29.xsd">
+<Header>
+  <From>MULTINET</From>
+  <To>POWRSHOP</To>
+  <MessageID><%= message_id %></MessageID>
+  <MessageDate>2018-04-28T23:57:03.616+10:00</MessageDate>
+  <TransactionGroup>MDMT</TransactionGroup>
+  <Priority>Medium</Priority>
+  <SecurityContext>MULTINETBATCH</SecurityContext>
+  <Market>VICGAS</Market>
+</Header>
+<Transactions>
+      <Transaction transactionID="<%= transaction_id %>" transactionDate="2018-04-28T23:39:38.000+10:00">
+        <AccountCreationNotification version="r9">
+          <AccountCreationData version="r29" xsi:type="ase:GasStandingData">
+            <NMI checksum="<%= checksum %>"><%= nmi %></NMI>
+            <MeterData>
+              <MeterSerialNumber><%= meter_serial_number %></MeterSerialNumber>
+              <MeterTypeSizeCode>3E</MeterTypeSizeCode>
+              <MeterRead>
+                <Current>
+                  <IndexValue><%= index_value %></IndexValue>
+                  <ReadDate><%= read_date %></ReadDate>
+                </Current>
+              </MeterRead>
+              <BasicMeter>
+                <ScheduledReadingDayNumber>11</ScheduledReadingDayNumber>
+              </BasicMeter>
+            </MeterData>
+            <SiteData>
+              <MelwayGridReference>59 D1</MelwayGridReference>
+              <MeterPosition>FR</MeterPosition>
+            </SiteData>
+          </AccountCreationData>
+        </AccountCreationNotification>
+      </Transaction>
+    </Transactions>
+  </ase:aseXML>

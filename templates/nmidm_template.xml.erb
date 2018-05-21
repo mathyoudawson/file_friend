@@ -1,0 +1,64 @@
+<ase:aseXML xmlns:ase="urn:aseXML:r29" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:aseXML:r29 http://www.nemmco.com.au/aseXML/schemas/r29/aseXML_r29.xsd">
+  <Header>
+    <From description="Certifying body">FBSTEST</From>
+    <To description="Certifying participant">POWRSHOP</To>
+    <MessageID><%= message_id %></MessageID>
+    <MessageDate>2018-04-03T11:09:55+10:00</MessageDate>
+    <TransactionGroup>NMID</TransactionGroup>
+    <Priority>Medium</Priority>
+    <Market>VICGAS</Market>
+  </Header>
+  <Transactions>
+    <Transaction transactionID="<%= message_id %>" transactionDate="2018-04-03T11:09:55+10:00" initiatingTransactionID="<%= initiating_transaction_id %>">
+      <NMIStandingDataResponse version="r4">
+        <NMIStandingData xsi:type="ase:GasStandingData" version="r29">
+          <NMI checksum="<%= checksum %>"><%= nmi %></NMI>
+          <MasterData>
+            <DistributionTariff>Demand</DistributionTariff>
+            <TransmissionZone>03</TransmissionZone>
+            <HeatingValueZone>01</HeatingValueZone>
+            <CustomerClassificationCode>RES</CustomerClassificationCode>
+            <MIRNStatus>Commissioned</MIRNStatus>
+          </MasterData>
+          <MeterData>
+            <MeterSerialNumber><%= meter_serial_number %></MeterSerialNumber>
+            <PressureCorrectionFactor>1.1</PressureCorrectionFactor>
+            <MeterStatus>Turned on</MeterStatus>
+            <SupplyPointCode>Basic</SupplyPointCode>
+            <BasicMeter>
+	      <NextScheduledReadDate>2002-03-01</NextScheduledReadDate>
+	      <MeterReadFrequency>Bi Monthly</MeterReadFrequency>
+	      <NextScheduledSpecialRead>
+		<Preferred>
+		  <Date>2002-02-01</Date>
+		</Preferred>
+	      </NextScheduledSpecialRead>
+	    </BasicMeter>
+          </MeterData>
+          <SiteData>
+            <Address>
+	      <AustralianAddress>
+		<StructuredAddress>
+		  <House>
+		    <HouseNumber><%= house_number %></HouseNumber>
+		  </House>
+		  <Street>
+		    <StreetName><%= street_name %></StreetName>
+		    <StreetType><%= street_type %></StreetType>
+		  </Street>
+		</StructuredAddress>
+		<SuburbOrPlaceOrLocality><%= suburb %></SuburbOrPlaceOrLocality>
+		<StateOrTerritory>VIC</StateOrTerritory>
+		<PostCode><%= post_code %></PostCode>
+	      </AustralianAddress>
+	    </Address>
+          </SiteData>
+          <AdditionalDataToFollow>false</AdditionalDataToFollow>
+        </NMIStandingData>
+        <Event class="Application" severity="Information">
+          <Code>0</Code>
+        </Event>
+      </NMIStandingDataResponse>
+    </Transaction>
+  </Transactions>
+</ase:aseXML>

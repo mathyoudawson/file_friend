@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ase:aseXML xsi:schemaLocation="urn:aseXML:r29 http://www.nemmco.com.au/aseXML/schemas/r29/aseXML_r29.xsd" xmlns:ase="urn:aseXML:r29" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Header>
+    <From>VENCORP</From>
+    <To>POWRSHOP</To>
+    <MessageID><%= message_id %></MessageID>
+    <MessageDate>2018-05-01T23:08:03+10:00</MessageDate>
+    <TransactionGroup>CATS</TransactionGroup>
+    <Market>VICGAS</Market>
+  </Header>
+  <Transactions>
+    <Transaction transactionID="<%= transaction_id %>" transactionDate="2018-05-01T20:06:20+10:00">
+      <CATSNotification version="r29">
+        <Role>NFRO</Role>
+        <RoleStatus>N</RoleStatus>
+        <ChangeRequest>
+          <Participant>PULSE</Participant>
+          <RequestID><%= request_id %></RequestID>
+          <ChangeStatusCode>REQ</ChangeStatusCode>
+          <ChangeData>
+            <ChangeReasonCode>0001</ChangeReasonCode>
+            <ProposedDate>2018-04-23</ProposedDate>
+            <NMIStandingData xsi:type="ase:GasStandingData" version="r29">
+              <NMI checksum="<%= checksum %>"><%= nmi %></NMI>
+            </NMIStandingData>
+          </ChangeData>
+        </ChangeRequest>
+      </CATSNotification>
+    </Transaction>
+  </Transactions>
+</ase:aseXML>
