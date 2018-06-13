@@ -2,6 +2,7 @@
 require 'erb'
 require 'zip'
 require 'date'
+require 'byebug'
 
 def zip(filename)
   xml_path = File.expand_path('xml', __dir__)
@@ -14,14 +15,21 @@ def zip(filename)
   end
 end
 
-# catsm_change_request
-def generate_catsm_change_request(attrs)
+def generate_next_transaction_id(transaction)
+  transaction_number = (transaction.match(/\d+/).to_s.to_i + 2).to_s
+  transaction_text = transaction.match(/\D+/).to_s
+  transaction_text + transaction_number
+end
+
+# catsm_change_response
+def generate_catsm_change_response(attrs)
+  byebug
   message_id = attrs.fetch(:message_id)
   transaction_id = attrs.fetch(:transaction_id)
-  initiating_transaction_id = attrs.fetch(:initiating_transaction_id)
+  initiating_transaction_id = generate_next_transaction_id(attrs.fetch(:initiating_transaction_id))
   request_id = attrs.fetch(:request_id)
 
-  filename      = 'catsm_change_request'
+  filename      = 'catsm_change_response'
   template_path = File.expand_path('templates', __dir__)
   template      = File.read(template_path + "/#{filename}_template.xml.erb")
 
@@ -143,6 +151,17 @@ def get_input(field)
   gets.chomp
 end
 
+# def get_nmi
+#   begin
+#     puts "Please enter a NMI which is 10 digits long: "
+#     user_input = gets.chomp
+#      until user_input.match?(/^\d{10}$/)
+#        puts "Please make sure NMI is 10 digits long: "
+#        user_input = gets.chomp
+#      end
+#   end
+# end
+
 def get_nmi
   puts "Please enter a NMI which is 10 digits long: "
   user_input = gets.chomp
@@ -154,9 +173,10 @@ def get_nmi
   user_input
 end
 
+
 def get_valid_date
   begin
-    puts "Please enter a Date with the format YYYY-MM-DD: "
+    puts "Please enter the actual change date with the format YYYY-MM-DD: "
     user_input = gets.chomp
     Date.strptime(user_input, '%Y-%m-%d')
   rescue ArgumentError
@@ -195,9 +215,9 @@ post_code                 = get_input("Post Code")
 # guarantees uniqueness (pretty much)
 id = Time.now.to_i
 
-catsm_change_request_attrs = {
-  message_id:                "catsm-change-req-msg-#{id}",
-  transaction_id:            "catsm-change-req-txn-#{id}",
+catsm_change_response_attrs = {
+  message_id:                "catsm-change-res-msg-#{id}",
+  transaction_id:            "catsm-change-res-txn-#{id}",
   initiating_transaction_id: initiating_transaction_id,
   request_id:                request_id
 }
@@ -253,7 +273,7 @@ nmidm_attrs = {
   post_code:                 post_code
 }
 
-generate_catsm_change_request(catsm_change_request_attrs)
+generate_catsm_change_response(catsm_change_response_attrs)
 generate_catsm_req(catsm_req_attrs)
 generate_catsm_pen(catsm_pen_attrs)
 generate_catsm_com(catsm_com_attrs)
