@@ -151,17 +151,6 @@ def get_input(field)
   gets.chomp
 end
 
-# def get_nmi
-#   begin
-#     puts "Please enter a NMI which is 10 digits long: "
-#     user_input = gets.chomp
-#      until user_input.match?(/^\d{10}$/)
-#        puts "Please make sure NMI is 10 digits long: "
-#        user_input = gets.chomp
-#      end
-#   end
-# end
-
 def get_nmi
   puts "Please enter a NMI which is 10 digits long: "
   user_input = gets.chomp
@@ -197,7 +186,7 @@ def checksum_for_nmi(nmi)
   (10 - (v % 10)) % 10
 end
 
-initiating_transaction_id = get_input("initiating_transaction_id") # 'POWERSHOP-TNS-111'
+initiating_transaction_id = get_input("initiating_transaction_id")
 request_id                = get_input("Request Id")
 actual_change_date        = get_valid_date
 nmi                       = get_nmi
