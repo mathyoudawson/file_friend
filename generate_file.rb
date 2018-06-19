@@ -1,3 +1,5 @@
+require 'zip'
+
 class GenerateFile
   def zip(filename)
     xml_path = File.expand_path('xml', __dir__)
