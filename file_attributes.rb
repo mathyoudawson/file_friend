@@ -79,11 +79,17 @@ class FileAttributes
     @nmi_checksum = (10 - (v % 10)) % 10
   end
 
+  def generate_next_transaction_id(transaction)
+    transaction_number = (transaction.match(/\d+/).to_s.to_i + 2).to_s
+    transaction_text = transaction.match(/\D+/).to_s
+    transaction_text + transaction_number
+  end
+
   def catsm_change_response_attrs
     @catsm_change_response_attrs = {
         message_id:                "catsm-change-res-msg-#{id}",
         transaction_id:            "catsm-change-res-txn-#{id}",
-        initiating_transaction_id: initiating_transaction_id,
+        initiating_transaction_id: generate_next_transaction_id(initiating_transaction_id),
         request_id:                request_id
     }
   end

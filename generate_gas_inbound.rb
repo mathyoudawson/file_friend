@@ -16,8 +16,6 @@ class GenerateGasInbound
     transaction_text + transaction_number
   end
 
-# TODO: by taking attrs instead of binding generate_next_transaction_id has been deprecated , should this method be moved into file attributes
-
   def generate_all_files(file_generator)
     file_generator.generate_xml(@file_attributes.nmidm_attrs, 'nmidm')
     file_generator.generate_xml(@file_attributes.catsm_change_response_attrs, 'catsm_change_response')
