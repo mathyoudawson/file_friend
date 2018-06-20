@@ -82,6 +82,7 @@ class UserInput
   end
 
   def set_attrs
+    # TODO: Tell people they got e
     get_nmi
     get_input("initiating_transaction_id")
     get_input("Request Id")
