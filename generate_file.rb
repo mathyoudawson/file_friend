@@ -15,4 +15,16 @@ class GenerateFile
   def validate(id)
     `find . -maxdepth 4 -type f -iname "*#{id}.xml" | xargs -I '{}' xmllint --noout --schema ~/Documents/schemas/r29/schema/aseXML_r29.xsd '{}'`
   end
+
+  def generate_xml(attrs, filename)
+    message_id = attrs.fetch(:message_id)
+    template_path = File.expand_path('templates', __dir__)
+    template      = File.read(template_path + "/#{filename}_template.xml.erb")
+
+    File.open("xml/#{message_id}.xml", 'w+') do |f|
+      f.write(ERB.new(template).result_with_hash(attrs))
+    end
+
+    zip(message_id)
+  end
 end
