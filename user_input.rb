@@ -6,7 +6,7 @@ class UserInput
   end
 
   def get_input(field)
-    puts "Please enter #{field}: "
+    puts "Please enter #{field}, default is #{@file_attributes.send(field)}:"
     set_input(field, gets.chomp)
   end
 
@@ -14,7 +14,7 @@ class UserInput
      unless value.to_s.empty?
       case field
       when 'nmi'
-        @file_attributes.nmi = value
+        @file_attributes.nmi = get_nmi
       when 'checksum'
         @file_attributes.nmi_checksum = value
       when 'initiating_transaction_id'
@@ -24,7 +24,7 @@ class UserInput
       when 'Meter Serial Number'
         @file_attributes.meter_serial_number = value
       when 'date'
-        @file_attributes.actual_change_date = value
+        @file_attributes.actual_change_date = get_valid_date
       when 'Index Value'
         @file_attributes.index_value = value
       when 'House Number'
@@ -44,28 +44,27 @@ class UserInput
   end
 
   def get_nmi
-    puts "Please enter a NMI which is 10 digits long: "
+    puts 'Please enter a NMI which is 10 digits long: '
     user_input = gets.chomp
 
     until user_input.match?(/^\d{10}$/)
-      puts "Please make sure NMI is 10 digits long: "
+      puts 'Please make sure NMI is 10 digits long: '
       user_input = gets.chomp
     end
     checksum_for_nmi(user_input)
-    set_input("nmi", user_input)
   end
 
 
   def get_valid_date
     begin
-      puts "Please enter the actual change date with the format YYYY-MM-DD: "
+      puts 'Please enter the actual change date with the format YYYY-MM-DD: '
       user_input = gets.chomp
       date = Date.strptime(user_input, '%Y-%m-%d')
     rescue ArgumentError
-      puts "Invalid date"
+      puts 'Invalid date'
       retry
     end
-    set_input('date', date)
+    date
   end
 
   def checksum_for_nmi(nmi)
@@ -78,21 +77,20 @@ class UserInput
     end
 
     checksum = (10 - (v % 10)) % 10
-    set_input("checksum", checksum)
+    set_input('checksum', checksum)
   end
 
   def set_attrs
-    # TODO: Tell people they got e
-    get_nmi
-    get_input("initiating_transaction_id")
-    get_input("Request Id")
-    get_input("Meter Serial Number")
-    get_valid_date
-    get_input("Index Value")
-    get_input("House Number")
-    get_input("Street Name")
-    get_input("Street Type")
-    get_input("Suburb")
-    get_input("Post Code")
+    get_input('nmi')
+    get_input('initiating_transaction_id')
+    get_input('request_id')
+    get_input('meter_serial_number')
+    get_input('actual_change_date')
+    get_input('index_value')
+    get_input('house_number')
+    get_input('street_name')
+    get_input('street_type')
+    get_input('suburb')
+    get_input('post_code')
   end
 end
