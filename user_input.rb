@@ -14,28 +14,28 @@ class UserInput
      unless value.to_s.empty?
       case field
       when 'nmi'
-        @file_attributes.nmi = get_nmi
+        @file_attributes.nmi = get_nmi(value)
       when 'checksum'
         @file_attributes.nmi_checksum = value
       when 'initiating_transaction_id'
         @file_attributes.initiating_transaction_id = value
-      when 'Request Id'
+      when 'request_id'
         @file_attributes.request_id = value
-      when 'Meter Serial Number'
+      when 'meter_serial_number'
         @file_attributes.meter_serial_number = value
       when 'date'
         @file_attributes.actual_change_date = get_valid_date
-      when 'Index Value'
+      when 'index_value'
         @file_attributes.index_value = value
-      when 'House Number'
+      when 'house_number'
         @file_attributes.house_number = value
-      when 'Street Name'
+      when 'street_name'
         @file_attributes.street_name = value
-      when 'Street Type'
+      when 'street_type'
         @file_attributes.street_type = value
-      when 'Suburb'
+      when 'suburb'
         @file_attributes.suburb = value
-      when 'Post Code'
+      when 'post_code'
         @file_attributes.post_code = value
       else
         puts "Error occurred setting field: #{field} with value: #{value}"
@@ -43,15 +43,13 @@ class UserInput
     end
   end
 
-  def get_nmi
-    puts 'Please enter a NMI which is 10 digits long: '
-    user_input = gets.chomp
-
-    until user_input.match?(/^\d{10}$/)
+  def get_nmi(value)
+    until value.match?(/^\d{10}$/)
       puts 'Please make sure NMI is 10 digits long: '
-      user_input = gets.chomp
+      value = gets.chomp
     end
-    checksum_for_nmi(user_input)
+    checksum_for_nmi(value)
+    value
   end
 
 
